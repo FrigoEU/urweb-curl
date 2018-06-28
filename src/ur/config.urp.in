@@ -1,2 +1,0 @@
-include @INCLUDE@/curl.h
-link @LIBCURL@

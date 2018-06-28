@@ -1,6 +1,6 @@
-library config
-ffi curlFfi
-link ./../c/curl.o
+link -lcurl
+link src/c/curl.o
+ffi src/ur/curlFfi
 effectful CurlFfi.post
 
 # $/json
@@ -9,5 +9,5 @@ $/monad
 $/string
 $/list
 $/option
-urls
-curl
+src/ur/urls
+src/ur/curl

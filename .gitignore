@@ -26,3 +26,5 @@ src/c/.libs
 *.lo
 *.la
 *.o
+*.exe
+/urweb-curl/

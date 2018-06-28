@@ -1,0 +1,13 @@
+library config
+ffi curlFfi
+link ./../c/curl.o
+effectful CurlFfi.post
+
+# $/json
+$/char
+$/monad
+$/string
+$/list
+$/option
+urls
+curl

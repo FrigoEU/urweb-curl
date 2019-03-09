@@ -18,17 +18,21 @@ fun handleResult str =
 fun postWithFormdata
       (url: url)
       (queryParams: list (string * string))
+      (authheader: option string)
       (userpwd: option string)
     : transaction {StatusCode: int, Response: option string} =
-    Monad.mp handleResult (CurlFfi.post url (buildQueryParams queryParams) userpwd)
+    Monad.mp handleResult
+             (CurlFfi.post url (buildQueryParams queryParams) authheader userpwd)
 
 fun getWithUrlEncoding
       (url: url)
       (queryParams: list (string * string))
+      (authheader: option string)
       (userpwd: option string)
     : transaction {StatusCode: int, Response: option string} =
     Monad.mp
       handleResult
       (CurlFfi.get
          (bless ((show url) ^ "?" ^ buildQueryParams queryParams))
+         authheader
          userpwd)

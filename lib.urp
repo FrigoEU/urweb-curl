@@ -4,7 +4,7 @@ include src/c/curl.h
 ffi src/ur/curlFfi
 effectful CurlFfi.post
 
-# $/json
+#$/json
 $/char
 $/monad
 $/string

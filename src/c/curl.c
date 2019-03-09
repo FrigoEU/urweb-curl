@@ -62,21 +62,34 @@ static uw_Basis_string doweb(uw_context ctx, CURL *c, uw_Basis_string url) {
   } 
 }
 
-uw_Basis_string uw_CurlFfi_post(uw_context ctx, uw_Basis_string url, uw_Basis_string body, uw_Basis_string userpwd) {
+uw_Basis_string uw_CurlFfi_post(uw_context ctx, uw_Basis_string url, uw_Basis_string body, uw_Basis_string authheader, uw_Basis_string userpwd) {
   CURL *c = curl(ctx);
 
   curl_easy_reset(c);
-  curl_easy_setopt(c, CURLOPT_POSTFIELDS, body);
 
   if (userpwd) {
     curl_easy_setopt(c, CURLOPT_USERPWD, userpwd);
   }
 
+  struct curl_slist *slist = NULL;
+  if (authheader) {
+    uw_Basis_string header = uw_Basis_strcat(ctx, "Authorization: ", authheader);
+    slist = curl_slist_append(slist, header);
+  }
+  if (slist == NULL)
+    uw_error(ctx, FATAL, "Can't append to libcurl slist");
+  curl_easy_setopt(c, CURLOPT_HTTPHEADER, slist);
+  uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, slist);
+
+  curl_easy_setopt(c, CURLOPT_POSTFIELDS, body);
+
   uw_Basis_string ret = doweb(ctx, c, url);
+  uw_pop_cleanup(ctx);
+
   return ret;
 }
 
-uw_Basis_string uw_CurlFfi_get(uw_context ctx, uw_Basis_string url, uw_Basis_string userpwd) {
+uw_Basis_string uw_CurlFfi_get(uw_context ctx, uw_Basis_string url, uw_Basis_string authheader, uw_Basis_string userpwd) {
   CURL *c = curl(ctx);
 
   curl_easy_reset(c);
@@ -84,6 +97,16 @@ uw_Basis_string uw_CurlFfi_get(uw_context ctx, uw_Basis_string url, uw_Basis_str
   if (userpwd) {
     curl_easy_setopt(c, CURLOPT_USERPWD, userpwd);
   }
+  
+  struct curl_slist *slist = NULL;
+  if (authheader) {
+    uw_Basis_string header = uw_Basis_strcat(ctx, "Authorization: ", authheader);
+    slist = curl_slist_append(slist, header);
+  }
+  if (slist == NULL)
+    uw_error(ctx, FATAL, "Can't append to libcurl slist");
+  curl_easy_setopt(c, CURLOPT_HTTPHEADER, slist);
+  uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, slist);
 
   uw_Basis_string ret = doweb(ctx, c, url);
   uw_pop_cleanup(ctx);

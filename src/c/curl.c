@@ -75,10 +75,8 @@ uw_Basis_string uw_CurlFfi_post(uw_context ctx, uw_Basis_string url, uw_Basis_st
   if (authheader) {
     uw_Basis_string header = uw_Basis_strcat(ctx, "Authorization: ", authheader);
     slist = curl_slist_append(slist, header);
+    curl_easy_setopt(c, CURLOPT_HTTPHEADER, slist);
   }
-  if (slist == NULL)
-    uw_error(ctx, FATAL, "Can't append to libcurl slist");
-  curl_easy_setopt(c, CURLOPT_HTTPHEADER, slist);
   uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, slist);
 
   curl_easy_setopt(c, CURLOPT_POSTFIELDS, body);
@@ -102,10 +100,8 @@ uw_Basis_string uw_CurlFfi_get(uw_context ctx, uw_Basis_string url, uw_Basis_str
   if (authheader) {
     uw_Basis_string header = uw_Basis_strcat(ctx, "Authorization: ", authheader);
     slist = curl_slist_append(slist, header);
+    curl_easy_setopt(c, CURLOPT_HTTPHEADER, slist);
   }
-  if (slist == NULL)
-    uw_error(ctx, FATAL, "Can't append to libcurl slist");
-  curl_easy_setopt(c, CURLOPT_HTTPHEADER, slist);
   uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, slist);
 
   uw_Basis_string ret = doweb(ctx, c, url);

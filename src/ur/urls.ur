@@ -6,7 +6,7 @@ fun hexchar n =
     else if n < 16 then
         str1 (chr (ord #"A" + n - 10))
     else
-        error <xml>Oauth.hexchar: too big</xml>
+      "hier"
 
 fun unhexchar ch =
     if Char.isDigit ch then
@@ -28,7 +28,14 @@ fun urlencode s =
                     val ch' = if Char.isAlnum ch then
                                   str1 ch
                               else
-                                  "%" ^ hexchar (ord ch / 16) ^ hexchar (ord ch % 16)
+                                let
+                                  val first = hexchar (ord ch / 16)
+                                  val second = hexchar (ord ch % 16)
+                                in
+                                  if first = "hier" || second = "hier"
+                                  then "hier"
+                                  else "%" ^ first ^ second
+                                end
                 in
                     loop (String.suffix s 1) (acc ^ ch')
                 end

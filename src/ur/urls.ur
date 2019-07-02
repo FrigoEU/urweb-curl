@@ -6,7 +6,7 @@ fun hexchar n =
     else if n < 16 then
         str1 (chr (ord #"A" + n - 10))
     else
-      "hier"
+      ""
 
 fun unhexchar ch =
     if Char.isDigit ch then
@@ -32,8 +32,8 @@ fun urlencode s =
                                   val first = hexchar (ord ch / 16)
                                   val second = hexchar (ord ch % 16)
                                 in
-                                  if first = "hier" || second = "hier"
-                                  then "hier"
+                                  if first = "" || second = ""
+                                  then ""
                                   else "%" ^ first ^ second
                                 end
                 in

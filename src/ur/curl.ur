@@ -22,7 +22,7 @@ fun postWithFormdata
       (userpwd: option string)
     : transaction {StatusCode: int, Response: option string} =
     Monad.mp handleResult
-             (CurlFfi.post url (buildQueryParams queryParams) authheader userpwd)
+             (CurlFfi.post url authheader userpwd None (buildQueryParams queryParams))
 
 fun getWithUrlEncoding
       (url: url)

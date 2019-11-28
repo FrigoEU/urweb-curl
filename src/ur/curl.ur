@@ -12,11 +12,11 @@ fun buildQueryParams
 fun handleResult str =
     case String.split str #";" of
       None => { StatusCode = 998
-              , Response = "Error: Failed to deserialize result from CURL, didn't find \";\" : " ^ str }
+              , Response = Some "Error: Failed to deserialize result from CURL, didn't find \";\" : " ^ str }
     | Some splitted =>
       case (read splitted.1: option int) of
         None => { StatusCode = 999
-                , Response = "Error: Failed to deserialize result from CURL, couldn't read status code as int : " ^ str }
+                , Response = Some "Error: Failed to deserialize result from CURL, couldn't read status code as int : " ^ str }
       | Some code => { StatusCode = code
                      , Response = if String.trim splitted.2 = "" then None else Some splitted.2
                      }

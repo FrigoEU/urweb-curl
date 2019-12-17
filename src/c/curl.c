@@ -102,18 +102,18 @@ static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string 
     if (lastVerb && (verb ? !strcmp(lastVerb, verb) : !lastVerb[0])) {
       uw_Basis_string lastBody = uw_get_global(ctx, "curl.lastBody");
       if (lastBody && (body ? !strcmp(lastBody, body) : !lastBody[0])) {
-        uw_Basis_string lastAuth = uw_get_global(ctx, "curl.lastAuth");
-        if (lastAuth && (auth ? !strcmp(lastAuth, auth) : !lastAuth[0])) {
-          uw_Basis_string lastUserPwd = uw_get_global(ctx, "curl.lastUserPwd");
-          if (lastUserPwd && (userpwd ? !strcmp(lastUserPwd, userpwd) : !lastUserPwd[0])) {
+        /* uw_Basis_string lastAuth = uw_get_global(ctx, "curl.lastAuth"); */
+        /* if (lastAuth && (auth ? !strcmp(lastAuth, auth) : !lastAuth[0])) { */
+        /*   uw_Basis_string lastUserPwd = uw_get_global(ctx, "curl.lastUserPwd"); */
+        /*   if (lastUserPwd && (userpwd ? !strcmp(lastUserPwd, userpwd) : !lastUserPwd[0])) { */
             uw_Basis_string lastResponse = uw_get_global(ctx, "curl.lastResponse");
             uw_Basis_string lastHttpCodeStr = uw_get_global(ctx, "curl.lastHttpCodeStr");
             if (!lastResponse || !lastHttpCodeStr)
               uw_error(ctx, FATAL, "Missing response in Curl cache");
             return uw_Basis_strcat(ctx, uw_Basis_strcat(ctx, lastHttpCodeStr, ";") , lastResponse);
           }
-        }
-      }
+      /*   } */
+      /* } */
     }
   }
 

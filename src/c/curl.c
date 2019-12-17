@@ -156,7 +156,7 @@ static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string 
   /* uw_set_global(ctx, "curl.lastAuth", strdup(auth ? auth : ""), free); */
   /* uw_set_global(ctx, "curl.lastUserPwd", strdup(userpwd ? userpwd : ""), free); */
   char *ret = strdup(buf.start);
-  uw_set_global(ctx, "curl.lastHttpCodeStr", httpcodestr, free);
+  uw_set_global(ctx, "curl.lastHttpCodeStr", strdup(httpcodestr), free);
   uw_set_global(ctx, "curl.lastResponse", ret, free);
   uw_pop_cleanup(ctx);
   uw_pop_cleanup(ctx);

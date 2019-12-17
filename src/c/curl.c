@@ -103,9 +103,10 @@ static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string 
       uw_Basis_string lastBody = uw_get_global(ctx, "curl.lastBody");
       if (lastBody && (body ? !strcmp(lastBody, body) : !lastBody[0])) {
         uw_Basis_string lastResponse = uw_get_global(ctx, "curl.lastResponse");
-        if (!lastResponse)
+        uw_Basis_string lastHttpCodeStr = uw_get_global(ctx, "curl.lastHttpCodeStr");
+        if (!lastResponse || !lastHttpCodeStr)
           uw_error(ctx, FATAL, "Missing response in Curl cache");
-        return lastResponse;
+        return uw_Basis_strcat(ctx, uw_Basis_strcat(ctx, lastHttpCodeStr, ";") , lastResponse);
       }
     }
   }
@@ -142,14 +143,16 @@ static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string 
   uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, slist);
 
   long http_code = doweb(ctx, &buf, c, url, 0);
+  char *httpcodestr = uw_Basis_intToString(ctx, http_code);
   uw_set_global(ctx, "curl.lastUrl", strdup(url), free);
   uw_set_global(ctx, "curl.lastVerb", strdup(verb ? verb : ""), free);
   uw_set_global(ctx, "curl.lastBody", strdup(body ? body : ""), free);
   char *ret = strdup(buf.start);
+  uw_set_global(ctx, "curl.lastHttpCodeStr", httpcodestr, free);
   uw_set_global(ctx, "curl.lastResponse", ret, free);
   uw_pop_cleanup(ctx);
   uw_pop_cleanup(ctx);
-  return uw_Basis_strcat(ctx, uw_Basis_strcat(ctx, uw_Basis_intToString(ctx, http_code), ";") , ret);
+  return uw_Basis_strcat(ctx, uw_Basis_strcat(ctx, httpcodestr, ";") , ret);
 }
 
 uw_Basis_string uw_CurlFfi_post(uw_context ctx, uw_Basis_string url, uw_Basis_string auth, uw_Basis_string userpwd, uw_Basis_string bodyContentType, uw_Basis_string body) {

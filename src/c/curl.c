@@ -153,8 +153,8 @@ static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string 
   uw_set_global(ctx, "curl.lastUrl", strdup(url), free);
   uw_set_global(ctx, "curl.lastVerb", strdup(verb ? verb : ""), free);
   uw_set_global(ctx, "curl.lastBody", strdup(body ? body : ""), free);
-  uw_set_global(ctx, "curl.lastAuth", strdup(auth ? auth : ""), free);
-  uw_set_global(ctx, "curl.lastUserPwd", strdup(userpwd ? userpwd : ""), free);
+  /* uw_set_global(ctx, "curl.lastAuth", strdup(auth ? auth : ""), free); */
+  /* uw_set_global(ctx, "curl.lastUserPwd", strdup(userpwd ? userpwd : ""), free); */
   char *ret = strdup(buf.start);
   uw_set_global(ctx, "curl.lastHttpCodeStr", httpcodestr, free);
   uw_set_global(ctx, "curl.lastResponse", ret, free);

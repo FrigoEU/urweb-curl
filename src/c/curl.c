@@ -102,7 +102,7 @@ static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string 
     if (lastVerb && (verb ? !strcmp(lastVerb, verb) : !lastVerb[0])) {
       uw_Basis_string lastBody = uw_get_global(ctx, "curl.lastBody");
       if (lastBody && (body ? !strcmp(lastBody, body) : !lastBody[0])) {
-        uw_Basis_string lastauth = uw_get_global(ctx, "curl.lastAuth");
+        uw_Basis_string lastAuth = uw_get_global(ctx, "curl.lastAuth");
         if (lastAuth && (body ? !strcmp(lastAuth, body) : !lastAuth[0])) {
           uw_Basis_string lastUserPwd = uw_get_global(ctx, "curl.lastUserPwd");
           if (lastUserPwd && (body ? !strcmp(lastUserPwd, body) : !lastUserPwd[0])) {

@@ -28,3 +28,4 @@ src/c/.libs
 *.o
 *.exe
 /urweb-curl/
+lib.urp

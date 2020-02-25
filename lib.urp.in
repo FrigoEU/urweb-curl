@@ -1,4 +1,4 @@
-link -lcurl
+link @LIBCURL@
 link src/c/curl.o
 include src/c/curl.h
 ffi src/ur/curlFfi

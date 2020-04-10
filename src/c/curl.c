@@ -93,6 +93,57 @@ static long doweb(uw_context ctx, uw_buffer *buf, CURL *c, uw_Basis_string url, 
   }
 }
 
+typedef struct uw_Curl_curl {
+  CURL* c;
+  struct curl_slist* headers;
+} uw_Curl_curl;
+
+uw_Curl_curl uw_Curl_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body) {
+  CURL *c = curl(ctx);
+  struct curl_slist *slist = NULL;
+  slist = curl_slist_append(slist, "User-Agent: Ur/Web Curl library");
+  curl_easy_reset(c);
+
+  if (body)
+    curl_easy_setopt(c, CURLOPT_POSTFIELDS, body);
+  if (verb)
+    curl_easy_setopt(c, CURLOPT_CUSTOMREQUEST, verb);
+  
+  return ((struct uw_Curl_curl){c, slist});
+}
+uw_Curl_curl uw_Curl_addHeader(uw_context ctx, uw_Curl_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content) {
+  uw_Basis_string header = uw_Basis_strcat(ctx, headerName, content);
+  struct curl_slist *slist = curl_slist_append(curlstruct.headers, header);
+  return ((struct uw_Curl_curl){curlstruct.c, slist});
+}
+void uw_Curl_setUserPwd(uw_context ctx, uw_Curl_curl curlstruct, uw_Basis_string userpwd){
+  curl_easy_setopt(curlstruct.c, CURLOPT_USERPWD, userpwd);
+}
+
+typedef struct uw_Curl_result {
+  uw_Basis_int http_code;
+  uw_Basis_string result;
+} uw_Curl_result;
+uw_Curl_result uw_Curl_run(uw_context ctx, uw_Curl_curl curlstruct, uw_Basis_string url){
+  curl_easy_setopt(curlstruct.c, CURLOPT_HTTPHEADER, curlstruct.headers);
+  uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, curlstruct.headers);
+ 
+  uw_buffer buf;
+  long http_code = doweb(ctx, &buf, curlstruct.c, url, 0);
+  uw_Basis_string ret = uw_strdup(ctx, buf.start);
+  uw_pop_cleanup(ctx);
+  uw_pop_cleanup(ctx);
+
+  return ((struct uw_Curl_result){ http_code, ret });
+}
+
+uw_Basis_int uw_Curl_getHttpCode(uw_context ctx, uw_Curl_result res){
+  return res.http_code;
+}
+uw_Basis_string uw_Curl_getResult(uw_context ctx, uw_Curl_result res){
+  return res.result;
+}
+
 static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string url, uw_Basis_string auth, uw_Basis_string userpwd, uw_Basis_string bodyContentType, uw_Basis_string body) {
   uw_buffer buf;
   

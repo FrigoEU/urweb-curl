@@ -3,9 +3,9 @@ link src/c/curl.o
 include src/c/curl.h
 ffi src/ur/curlFfi
 effectful CurlFfi.post
-beningEffectful CurlFfi.mkCurl
-beningEffectful CurlFfi.addHeader
-beningEffectful CurlFfi.setUserPwd
+benignEffectful CurlFfi.mkCurl
+benignEffectful CurlFfi.addHeader
+benignEffectful CurlFfi.setUserPwd
 effectful CurlFfi.run
 
 #$/json

@@ -8,7 +8,7 @@ uw_Basis_string uw_CurlFfi_delete(uw_context ctx, uw_Basis_string url, uw_Basis_
 
 typedef struct uw_CurlFfi_curl {
   CURL *c;
-  curl_slist *headers;
+  struct curl_slist *headers;
 } uw_CurlFfi_curl;
 uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body);
 uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content);

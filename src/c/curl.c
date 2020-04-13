@@ -112,7 +112,7 @@ struct uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, u
   return ((struct uw_CurlFfi_curl){c, slist});
 }
 struct uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content) {
-  uw_Basis_string header = uw_Basis_strcat(ctx, headerName, content);
+  uw_Basis_string header = uw_Basis_strcat(ctx, uw_Basis_strcat(ctx, headerName, ": "), content);
   struct curl_slist *slist = curl_slist_append(curlstruct.headers, header);
   return ((struct uw_CurlFfi_curl){curlstruct.c, slist});
 }

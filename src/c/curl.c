@@ -114,7 +114,7 @@ struct uw_CurlFfi_curl uw_CurlFfi_setBodyString(uw_context ctx, struct uw_CurlFf
     curl_easy_setopt(curlstruct.c, CURLOPT_POSTFIELDS, body);
   return curlstruct;
 }
-struct uw_CurlFfi_curl uw_CurlFfi_setBodyBlob(uw_context ctx, struct uw_CurlFfi_curl curlstruct, struct uw_Basis_blob body) {
+struct uw_CurlFfi_curl uw_CurlFfi_setBodyBlob(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_blob body) {
   if (body)
     curl_easy_setopt(curlstruct.c, CURLOPT_POSTFIELDS, body.data);
   return curlstruct;

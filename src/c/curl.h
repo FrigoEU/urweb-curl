@@ -10,14 +10,14 @@ typedef struct uw_CurlFfi_curl {
   CURL* c;
   struct curl_slist* headers;
 } uw_CurFfil_curl;
-uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body);
-uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content);
-void uw_CurlFfi_setUserPwd(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd);
+struct uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body);
+struct uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content);
+void uw_CurlFfi_setUserPwd(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd);
 
 typedef struct uw_CurlFfi_result {
   uw_Basis_int http_code;
   uw_Basis_string result;
 } uw_CurlFfi_result;
-uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string url);
+uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string url);
 uw_Basis_int uw_CurlFfi_getHttpCode(uw_context ctx, uw_CurlFfi_result res);
 uw_Basis_string uw_CurlFfi_getResult(uw_context ctx, uw_CurlFfi_result res);

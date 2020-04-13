@@ -98,7 +98,7 @@ typedef struct uw_CurlFfi_curl {
   struct curl_slist* headers;
 } uw_CurlFfi_curl;
 
-uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body) {
+struct uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body) {
   CURL *c = curl(ctx);
   struct curl_slist *slist = NULL;
   slist = curl_slist_append(slist, "User-Agent: Ur/Web Curl library");
@@ -111,12 +111,12 @@ uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis
   
   return ((struct uw_CurlFfi_curl){c, slist});
 }
-uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content) {
+struct uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content) {
   uw_Basis_string header = uw_Basis_strcat(ctx, headerName, content);
   struct curl_slist *slist = curl_slist_append(curlstruct.headers, header);
   return ((struct uw_CurlFfi_curl){curlstruct.c, slist});
 }
-void uw_CurlFfi_setUserPwd(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd){
+void uw_CurlFfi_setUserPwd(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd){
   curl_easy_setopt(curlstruct.c, CURLOPT_USERPWD, userpwd);
 }
 
@@ -124,7 +124,7 @@ typedef struct uw_CurlFfi_result {
   uw_Basis_int http_code;
   uw_Basis_string result;
 } uw_CurlFfi_result;
-uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string url){
+uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string url){
   curl_easy_setopt(curlstruct.c, CURLOPT_HTTPHEADER, curlstruct.headers);
   uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, curlstruct.headers);
  

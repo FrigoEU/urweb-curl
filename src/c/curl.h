@@ -18,6 +18,6 @@ typedef struct uw_CurlFfi_result {
   uw_Basis_int http_code;
   uw_Basis_string result;
 } uw_CurlFfi_result;
-uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string url);
+struct uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string url);
 uw_Basis_int uw_CurlFfi_getHttpCode(uw_context ctx, uw_CurlFfi_result res);
 uw_Basis_string uw_CurlFfi_getResult(uw_context ctx, uw_CurlFfi_result res);

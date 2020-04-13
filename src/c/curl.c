@@ -93,10 +93,10 @@ static long doweb(uw_context ctx, uw_buffer *buf, CURL *c, uw_Basis_string url, 
   }
 }
 
-typedef struct uw_CurlFfi_curl {
-  CURL* c;
-  struct curl_slist* headers;
-} uw_CurlFfi_curl;
+/* typedef struct uw_CurlFfi_curl { */
+/*   CURL* c; */
+/*   struct curl_slist* headers; */
+/* } uw_CurlFfi_curl; */
 
 struct uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body) {
   CURL *c = curl(ctx);
@@ -120,11 +120,11 @@ void uw_CurlFfi_setUserPwd(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw
   curl_easy_setopt(curlstruct.c, CURLOPT_USERPWD, userpwd);
 }
 
-typedef struct uw_CurlFfi_result {
-  uw_Basis_int http_code;
-  uw_Basis_string result;
-} uw_CurlFfi_result;
-uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string url){
+/* typedef struct uw_CurlFfi_result { */
+/*   uw_Basis_int http_code; */
+/*   uw_Basis_string result; */
+/* } uw_CurlFfi_result; */
+struct uw_CurlFfi_result uw_CurlFfi_run(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string url){
   curl_easy_setopt(curlstruct.c, CURLOPT_HTTPHEADER, curlstruct.headers);
   uw_push_cleanup(ctx, (void (*)(void *))curl_slist_free_all, curlstruct.headers);
  

@@ -6,8 +6,9 @@ val delete : url -> option string (* auth header *) -> option string (* user/pwd
 type curl
 val mkCurl:
     option string (* verb *) ->
-    option string (* body *) ->
     transaction curl
+val setBodyString: curl -> string -> transaction curl
+val setBodyBlob: curl -> blob -> transaction curl
 val addHeader:
     curl ->
     string ->

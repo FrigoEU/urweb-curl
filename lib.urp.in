@@ -7,6 +7,8 @@ effectful CurlFfi.post
 benignEffectful CurlFfi.mkCurl
 benignEffectful CurlFfi.addHeader
 benignEffectful CurlFfi.setUserPwd
+benignEffectful CurlFfi.setBodyString
+benignEffectful CurlFfi.setBodyBlob
 effectful CurlFfi.run
 
 #$/json

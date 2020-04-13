@@ -98,19 +98,28 @@ static long doweb(uw_context ctx, uw_buffer *buf, CURL *c, uw_Basis_string url, 
 /*   struct curl_slist* headers; */
 /* } uw_CurlFfi_curl; */
 
-struct uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body) {
+struct uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb) {
   CURL *c = curl(ctx);
   struct curl_slist *slist = NULL;
   slist = curl_slist_append(slist, "User-Agent: Ur/Web Curl library");
   curl_easy_reset(c);
 
-  if (body)
-    curl_easy_setopt(c, CURLOPT_POSTFIELDS, body);
   if (verb)
     curl_easy_setopt(c, CURLOPT_CUSTOMREQUEST, verb);
   
   return ((struct uw_CurlFfi_curl){c, slist});
 }
+struct uw_CurlFfi_curl uw_CurlFfi_setBodyString(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string body) {
+  if (body)
+    curl_easy_setopt(curlstruct.c, CURLOPT_POSTFIELDS, body);
+  return curlstruct;
+}
+struct uw_CurlFfi_curl uw_CurlFfi_setBodyBlob(uw_context ctx, struct uw_CurlFfi_curl curlstruct, struct uw_Basis_blob body) {
+  if (body)
+    curl_easy_setopt(curlstruct.c, CURLOPT_POSTFIELDS, body.data);
+  return curlstruct;
+}
+
 struct uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content) {
   uw_Basis_string header = uw_Basis_strcat(ctx, uw_Basis_strcat(ctx, headerName, ": "), content);
   struct curl_slist *slist = curl_slist_append(curlstruct.headers, header);

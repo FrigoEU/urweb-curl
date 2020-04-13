@@ -8,7 +8,7 @@
     buildInputs = [gcc];
     # TODO: Improve like urweb.nix c, cflags etc
     configurePhase = "
-      sed s~@LIBCURL@~${curl.out}/lib/libcurl.so~g lib.urp.in > lib.urp
+      sed -e s~@LIBCURL@~${curl.out}/lib/libcurl.so~g -e s~@LIBCURLDEV@~${curl.dev}/include~g lib.urp.in > lib.urp
     ";
     buildPhase = ''
       ${gcc}/bin/gcc -c -I${urweb}/include/urweb -I${curl.dev}/include -I${icu.dev}/include -Isrc/c -o src/c/curl.o -Wimplicit -Wall -Werror -Wno-deprecated-declarations src/c/curl.c

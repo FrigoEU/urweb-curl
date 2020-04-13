@@ -12,7 +12,7 @@ typedef struct uw_CurlFfi_curl {
 } uw_CurlFfi_curl;
 uw_CurlFfi_curl uw_CurlFfi_mkCurl(uw_context ctx, uw_Basis_string verb, uw_Basis_string body);
 uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string headerName, uw_Basis_string content);
-void uw_CurlFfi_setUserPwd(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd);
+uw_Basis_unit uw_CurlFfi_setUserPwd(uw_context ctx, uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd);
 
 typedef struct uw_CurlFfi_result {
   uw_Basis_int http_code;

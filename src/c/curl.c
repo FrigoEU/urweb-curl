@@ -116,8 +116,9 @@ struct uw_CurlFfi_curl uw_CurlFfi_addHeader(uw_context ctx, struct uw_CurlFfi_cu
   struct curl_slist *slist = curl_slist_append(curlstruct.headers, header);
   return ((struct uw_CurlFfi_curl){curlstruct.c, slist});
 }
-void uw_CurlFfi_setUserPwd(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd){
+uw_Basis_unit uw_CurlFfi_setUserPwd(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_string userpwd){
   curl_easy_setopt(curlstruct.c, CURLOPT_USERPWD, userpwd);
+  return 0;
 }
 
 /* typedef struct uw_CurlFfi_result { */

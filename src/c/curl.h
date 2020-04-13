@@ -1,5 +1,4 @@
 #include <urweb.h>
-#include <curl/curl.h>
 
 uw_Basis_string uw_CurlFfi_get(uw_context ctx, uw_Basis_string url, uw_Basis_string auth, uw_Basis_string userpwd);
 uw_Basis_string uw_CurlFfi_post(uw_context ctx, uw_Basis_string url, uw_Basis_string auth, uw_Basis_string userpwd, uw_Basis_string bodyContentType, uw_Basis_string body);

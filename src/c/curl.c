@@ -115,11 +115,8 @@ struct uw_CurlFfi_curl uw_CurlFfi_setBodyString(uw_context ctx, struct uw_CurlFf
   return curlstruct;
 }
 struct uw_CurlFfi_curl uw_CurlFfi_setBodyBlob(uw_context ctx, struct uw_CurlFfi_curl curlstruct, uw_Basis_blob body) {
-  uw_Basis_string r = uw_malloc(ctx, body.size + 1);
-  memcpy(r, body.data, b.size);
-  r[b.size] = 0;
-
-  curl_easy_setopt(curlstruct.c, CURLOPT_POSTFIELDS, r);
+  curl_easy_setopt(curlstruct.c, CURLOPT_POSTFIELDSIZE, body.size)
+  curl_easy_setopt(curlstruct.c, CURLOPT_POSTFIELDS, body.data);
 
   return curlstruct;
 }

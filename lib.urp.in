@@ -1,5 +1,5 @@
 link @LIBCURL@
-include @LIBCURLDEV@
+include @LIBCURLDEV@/curl/curl.h
 link src/c/curl.o
 include src/c/curl.h
 ffi src/ur/curlFfi

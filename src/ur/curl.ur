@@ -42,3 +42,6 @@ fun getWithUrlEncoding
          (bless ((show url) ^ "?" ^ buildQueryParams queryParams))
          authheader
          userpwd)
+
+fun get (url: url) : transaction {StatusCode: int, Response: option string} =
+    Monad.mp handleResult (CurlFfi.get url None None)

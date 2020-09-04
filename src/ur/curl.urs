@@ -13,3 +13,6 @@ val getWithUrlEncoding : url ->
                          option string -> (* user / pwd *)
                          transaction { StatusCode: int
                                      , Response: option string}
+
+val get : url -> transaction { StatusCode: int
+                             , Response: option string}

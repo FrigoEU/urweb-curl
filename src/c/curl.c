@@ -192,6 +192,7 @@ static uw_Basis_string nonget(const char *verb, uw_context ctx, uw_Basis_string 
 
   struct curl_slist *slist = NULL;
   slist = curl_slist_append(slist, "User-Agent: Ur/Web Curl library");
+  slist = curl_slist_append(slist, "Accept: application/json");
 
   if (userpwd) {
     curl_easy_setopt(c, CURLOPT_USERPWD, userpwd);
@@ -248,6 +249,7 @@ uw_Basis_string uw_CurlFfi_get(uw_context ctx, uw_Basis_string url, uw_Basis_str
 
   struct curl_slist *slist = NULL;
   slist = curl_slist_append(slist, "User-Agent: Ur/Web Curl library");
+  slist = curl_slist_append(slist, "Accept: application/json");
 
   if (userpwd) {
     curl_easy_setopt(c, CURLOPT_USERPWD, userpwd);

@@ -1,4 +1,4 @@
-{stdenv, curl, gcc, fetchFromGitHub, urweb, icu}:
+{stdenv, curl, gcc, urweb, icu}:
   stdenv.mkDerivation rec {
     version = "0.0.1";
     name = "urweb-curl-${version}";

@@ -9,7 +9,11 @@
         let 
           pkgs = import nixpkgs { system = system; };
           p = import ./default.nix {
-            pkgs = pkgs;
+            stdenv = pkgs.stdenv;
+            curl = pkgs.curl;
+            gcc = pkgs.gcc;
+            urweb = pkgs.urweb;
+            icu = pkgs.icu;
           };
         in
           {

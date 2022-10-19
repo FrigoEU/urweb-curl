@@ -8,11 +8,13 @@
       (system:
         let 
           pkgs = import nixpkgs { system = system; };
+          p = import ./default.nix {
+            pkgs = pkgs;
+          };
         in
           {
-            ur-package = (import ./default.nix {
-              pkgs = pkgs;
-            });
+            defaultPackage = p;
+            ur-package = p;
           }
       );
 }
